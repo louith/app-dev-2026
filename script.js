@@ -1,70 +1,58 @@
-console.log("Hello, Worlddddd!");
-console.log("piste");
-// const title = document.getElementById("title");
-// title.textContent = "Hi!";
+const userEmail = document.getElementById("userEmail");
+const emailError = document.getElementById("emailError");
 
-// const items = document.getElementsByClassName("item");
-// items[0].style.color = "red";
-// items[1].style.color = "blue";
+const userPhone = document.getElementById("userPhone");
+const phoneError = document.getElementById("phoneError");
 
-// const listItems = document.getElementsByTagName("p");
-// listItems[1].textContent = "Orange";
+const userPassword = document.getElementById("userPassword");
+const passwordError = document.getElementById("passwordError");
 
-const buttons = document.querySelectorAll(".btn");
-buttons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    console.log("Button clicked");
-  });
+const form = document.getElementById("signupForm");
+
+// email validation function
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+userEmail.addEventListener("blur", () => {
+  if (userEmail.value.trim() === "") {
+    emailError.textContent = "Email is required!";
+  } else {
+    emailError.textContent = "";
+    // emailError.style.color = "red";
+  }
 });
 
-// box.classList.toggle("hidden");
-// button.addEventListener("click", () => {
-//   box.classList.toggle("hidden");
-//   console.log(
-//     box.classList.contains("hidden") ? "Box is hidden" : "Box is visible",
-//   );
-// });
+userEmail.addEventListener("keydown", () => {
+  if (!isValidEmail(userEmail.value)) {
+    emailError.textContent = "Invalid email format!";
+  } else {
+    emailError.textContent = "";
+  }
+});
 
-const box = document.querySelector("#box");
-const saveBtn = document.getElementById("box");
-box.classList.add("active");
-// box.classList.add("rounded");
-function toggleClass() {
-  box.classList.toggle("rounded");
-}
+userPassword.addEventListener("input", () => {
+  if (userPassword.value.length < 8) {
+    passwordError.textContent = "Password must be at least 8 characters";
+  } else if (!/\d/.test(userPassword.value)) {
+    passwordError.textContent = "Password must contain a number";
+  } else {
+    passwordError.textContent = "";
+  }
+});
 
-saveBtn.addEventListener("click", toggleClass);
+form.addEventListener("submit", (event) => {
+  event.preventDefault(); // stop reload
 
-// ==================================================================
-const students = [
-  { name: "Ana", score: 90 },
-  { name: "Mark", score: 70 },
-  { name: "John", score: 85 },
-];
-// let total = 0;
-function calculateAverage(students) {
-  const totalScore = students.reduce((total, student) => {
-    return total + student.score;
-  }, 0);
+  if (
+    userEmail.value === "" ||
+    userPhone.value === "" ||
+    userPassword.value === ""
+  ) {
+    alert("Please fill all required fields");
+    return;
+  }
 
-  const average = totalScore / students.length;
-
-  return {
-    average: average,
-    highest: Math.max(...students.map((student) => student.score)),
-    lowest: Math.min(...students.map((student) => student.score)),
-    total: students.length,
-  };
-}
-
-const aveBtn = document.querySelector(".aveBtn");
-// const aveBtn = document.getElementsByClassName
-
-aveBtn.addEventListener("click", () => {
-  const result = calculateAverage(students);
-  // console.log("Average Score:", result.average);
-  // console.log("Highest Score:", result.highest);
-  // console.log("Lowest Score:", result.lowest);
-  // console.log("Total Students:", result.total);
-  console.log("Result", result);
+  // form is valid
+  alert("Form submitted!");
 });
