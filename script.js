@@ -41,18 +41,42 @@ userPassword.addEventListener("input", () => {
   }
 });
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault(); // stop reload
+form.addEventListener("submit", onFormSubmit);
 
-  if (
-    userEmail.value === "" ||
-    userPhone.value === "" ||
-    userPassword.value === ""
-  ) {
-    alert("Please fill all required fields");
-    return;
-  }
+// WARNING: All these functions are named the same, so only the last one will be used. The previous ones will be overwritten. Choose the function you want to use and comment out the others.
+// just prints an instance of the object, not the actual key:value pairs
+function onFormSubmit(event) {
+  event.preventDefault(); // stop immediate reload
 
-  // form is valid
-  alert("Form submitted!");
-});
+  // so you can make your own logic to handle the form data, like sending it to a server or displaying it on the page
+  const data = new FormData(event.target);
+  const dataObject = Object.fromEntries(data.entries());
+
+  console.log(dataObject);
+}
+
+// traverse FormData with forEach()
+function onFormSubmit(event) {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  data.forEach((value, key) => {
+    console.log(`${key}: ${value}`);
+  });
+}
+
+// // Accessing Form Data by Name
+function onFormSubmit(event) {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  const name = data.get("name");
+  const email = data.get("email");
+  console.log(`Name: ${name}, Email: ${email}`);
+
+  const payload = Object.fromEntries(data.entries());
+
+  fetch("/api/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
