@@ -1,6 +1,7 @@
 const express = require('express');
 const userRoutes = require('./routes/user/routes');
 // const errorHandler = require('./middleware/errorHandler');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
