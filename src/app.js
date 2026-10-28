@@ -1,12 +1,11 @@
 const express = require('express');
-const userRoutes = require('./routes/user/routes');
 // const errorHandler = require('./middleware/errorHandler');
 const jwt = require('jsonwebtoken');
-
+const postRoutes = require('./routes/postRoutes');
 const app = express();
 
 app.use(express.json());
-app.use('/api/users', userRoutes);
+// app.use('/api/users', userRoutes);
 // app.use(errorHandler);
-
+app.use('/posts', postRoutes);
 module.exports = app;
