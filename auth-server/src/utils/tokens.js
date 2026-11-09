@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const db = require("../db");
+const { db, academic } = require("../db");
 
 const REFRESH_DAYS = Number(process.env.REFRESH_DAYS) || 7;
 

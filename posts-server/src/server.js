@@ -1,10 +1,12 @@
-//handles startup concerns like connecting to db, reading environment vars
-require('dotenv').config();
-const app = require('./app'); //imports app.js file to use the express app and routes defined in it
+require("dotenv").config();
+const app = require("./app");
 
 const PORT = process.env.PORT;
 
-app.listen(PORT, () => {
-  console.log(`App listening to ${PORT}`);
+app.listen(PORT, (err) => {
+  if (err) {
+    console.error("Failed to start:", err);
+    process.exit(1);
+  }
+  console.log(`Auth server on port ${PORT}`);
 });
-

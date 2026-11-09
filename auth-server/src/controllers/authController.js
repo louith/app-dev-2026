@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const db = require("../db");
+const { db, academic } = require("../db");
 const { sha256, signAccess, issueRefresh } = require("../utils/tokens");
 
 exports.register = async (req, res) => {
@@ -125,6 +125,24 @@ exports.setRole = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
     res.json({ message: "Role updated" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+exports.getStudentInfo = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await academic.execute(
+      `SELECT *
+       FROM student_master s
+       WHERE s.id = ?`,
+      [id],
+    );
+    const student = rows[0];
+    if (!student) return res.status(404).json({ error: "Student not found" });
+    res.json(student);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });

@@ -16,4 +16,7 @@ router.patch(
   auth.setRole,
 );
 
+// sample diff db connection query
+router.get("/get-student/:id", requireAuth, auth.getStudentInfo);
+
 module.exports = router;
