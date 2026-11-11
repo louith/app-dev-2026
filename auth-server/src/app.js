@@ -3,8 +3,11 @@ const express = require("express");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors({ origin: "http://localhost:5173" }));
 
 app.use(helmet());
 app.use(express.json());

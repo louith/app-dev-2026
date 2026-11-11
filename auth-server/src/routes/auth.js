@@ -17,6 +17,6 @@ router.patch(
 );
 
 // sample diff db connection query
-router.get("/get-student/:id", requireAuth, auth.getStudentInfo);
+router.get("/get-student/:id", auth.getStudentInfo);
 
 module.exports = router;
